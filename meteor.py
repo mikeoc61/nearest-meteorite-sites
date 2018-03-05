@@ -1,4 +1,12 @@
-#! /usr/bin/env python
+#!/usr/bin/env python
+
+'''
+
+Python3 program which calculates and reports on historical meteor impacts nearest our location
+
+@author: Michael O'Connor
+
+'''
 
 import math
 import requests

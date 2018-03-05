@@ -1,4 +1,5 @@
-# Haversine Formula for calculating distances on a sphere, in this case earth
+# Haversine formula for calculating distances on a sphere, in this case earth
+
 import math
 
 def calc_dist(lat1, lon1, lat2, lon2):
