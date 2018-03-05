@@ -4,6 +4,8 @@
 
 Python3 program which calculates and reports on historical meteor impacts nearest our location
 
+See: https://www.findlatitudeandlongitude.com/ to identify lat and long for your location
+
 @author: Michael O'Connor
 
 '''
