@@ -52,4 +52,4 @@ if __name__ == '__main__':
     print ("Total meteors in dataset: {0:6d}".format(len(meteor_data)))
 
     for i in range(0,10):
-        print ("#{0:2d} closest meteor to me is: {1:6.2f} miles in {2:4s}".format(i+1, meteor_data[i]['distance'], meteor_data[i]['year']))
+        print ("#{0:2d} closest meteor to me is: {1:6.2f} miles in {2:.4}".format(i+1, meteor_data[i]['distance'], meteor_data[i]['year']))
