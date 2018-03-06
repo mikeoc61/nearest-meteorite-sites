@@ -30,6 +30,8 @@ if __name__ == '__main__':
 
     # Get Meteor impact coordinate data from NASA
 
+    print ("Getting impact data from NASA...")
+
     meteor_resp = requests.get('https://data.nasa.gov/resource/y77d-th95.json')
 
     # Convert into JSON format
@@ -38,6 +40,8 @@ if __name__ == '__main__':
 
     # Itterate through meteor data and add calculated distance from current location to data set
     # Skip if location coordinates are missing
+
+    print ("Sorting through data, calculating distances...")
 
     for meteor in meteor_data:
         if not ('reclat' in meteor and 'reclong' in meteor): continue
