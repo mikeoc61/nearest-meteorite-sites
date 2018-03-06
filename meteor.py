@@ -6,7 +6,9 @@ Python3 program which calculates and reports on historical meteor impacts neares
 
 See: https://www.findlatitudeandlongitude.com/ to identify lat and long for your location
 
-@author: Michael O'Connor
+@author: Michael O'Connor <gmikeoc@gmail.com>
+
+@copywrite: 2018
 
 '''
 
@@ -24,9 +26,7 @@ my_long = -96.959801
 def get_dist(meteor):
     return meteor.get('distance', math.inf)
 
-if __name__ == '__main__':
-
-    my_loc = (my_lat, my_long)
+def main():
 
     # Get Meteor impact coordinate data from NASA
 
@@ -45,15 +45,21 @@ if __name__ == '__main__':
 
     for meteor in meteor_data:
         if not ('reclat' in meteor and 'reclong' in meteor): continue
-        meteor['distance'] = dist(float(meteor['reclat']), float(meteor['reclong']), my_loc[0], my_loc[1])
+        meteor['distance'] = dist(float(meteor['reclat']), float(meteor['reclong']), my_lat, my_long)
 
     # Sort meteor data by distance key made arbitrarly large if otherwise missing
 
     meteor_data.sort(key=get_dist)
 
+    print ("Total meteors in NASA dataset: {0:5d}".format(len(meteor_data)))
+
     # Print out the 10 closest meteors to land near my location
 
-    print ("Total meteors in dataset: {0:6d}".format(len(meteor_data)))
-
     for i in range(0,10):
-        print ("#{0:2d} closest meteor to me is: {1:6.2f} miles in {2:.4}".format(i+1, meteor_data[i]['distance'], meteor_data[i]['year']))
+        print ("#{0:2d} closest meteor to me is: {1:6.2f} miles in {2:.4}".format \
+                (i+1, meteor_data[i]['distance'], meteor_data[i]['year']))
+
+# If called from shell as script
+
+if __name__ == '__main__':
+    main()
