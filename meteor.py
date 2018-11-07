@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 '''
 
@@ -6,15 +7,20 @@ Python3 program which calculates and reports on historical meteor impacts neares
 
 See: https://www.findlatitudeandlongitude.com/ to identify lat and long for your location
 
-@author: Michael O'Connor <gmikeoc@gmail.com>
-
-@copywrite: 2018
-
 '''
 
+_author__     = "Michael E. O'Connor"
+__copyright__ = "Copyright 2018"
+
+import sys
 import math
 import requests
 from haversine import calc_dist as dist
+
+if sys.version_info <= (3, 0):
+    print("Sorry, {} requires Python 3.x, detected: [{}]".format \
+    (sys.argv[0], str(sys.version_info[0]) + '.' + str(sys.version_info[1])))
+    raise SystemExit()
 
 # Lat and long for Zipcode 75063
 
@@ -46,6 +52,7 @@ def main():
     for meteor in meteor_data:
         if not ('reclat' in meteor and 'reclong' in meteor): continue
         meteor['distance'] = dist(float(meteor['reclat']), float(meteor['reclong']), my_lat, my_long)
+        #print (meteor)
 
     # Sort meteor data by distance key made arbitrarly large if otherwise missing
 
@@ -61,5 +68,4 @@ def main():
 
 # If called from shell as script
 
-if __name__ == '__main__':
-    main()
+if __name__ == '__main__': main()
