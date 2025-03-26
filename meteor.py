@@ -16,6 +16,7 @@ import sys
 import math
 import requests
 from haversine import calc_dist as dist
+from geopy.geocoders import Nominatim
 
 if sys.version_info <= (3, 0):
     print("Sorry, {} requires Python 3.x, detected: {}".format \
@@ -24,8 +25,38 @@ if sys.version_info <= (3, 0):
 
 # Lat and long for Zipcode 75063
 
-my_lat = 32.924702
-my_long = -96.959801
+# my_lat = 32.924702
+# my_long = -96.959801
+
+def get_lat_long(zip_code):
+    # Initialize geolocator with a user-agent
+    geolocator = Nominatim(user_agent="zip-code-locator")
+    
+    # Get the location based on the zip code
+    location = geolocator.geocode(zip_code)
+    
+    # Check if location is found
+    if location:
+        return location.latitude, location.longitude
+    else:
+        return None
+    
+def get_location_details(zip_code):
+    # Initialize geolocator with a user-agent
+    geolocator = Nominatim(user_agent="zip-code-locator")
+    
+    # Get the location based on the zip code
+    location = geolocator.geocode(zip_code)
+    
+    # Check if location is found
+    if location:
+        # Location object contains city, state, country, and coordinates
+        city = location.raw.get('address', {}).get('city', 'N/A')
+        state = location.raw.get('address', {}).get('state', 'N/A')
+        country = location.raw.get('address', {}).get('country', 'N/A')
+        return city, state, country, location.latitude, location.longitude
+    else:
+        return None
 
 # If distance field is missing, populate field with very large number
 
@@ -33,6 +64,28 @@ def get_dist(meteor):
     return meteor.get('distance', math.inf)
 
 def main():
+
+    # Prompt the user for a 5-digit zip code
+
+    zip_code = input("Please enter a 5-digit ZIP code: ")
+
+    # Validate that the zip code is 5 digits
+
+    if len(zip_code) == 5 and zip_code.isdigit():
+        # coordinates = get_lat_long(zip_code)
+        location_details = get_location_details(zip_code)
+        
+        if location_details:
+            city, state, country, my_lat, my_long = location_details
+            print(f"City: {city}, State: {state}, Country: {country}")
+            print(f"Latitude: {my_lat}, Longitude: {my_long}")
+
+            print(f"Raw: {location_details}")
+        else:
+            print("Could not find information for this ZIP code.")
+
+    else:
+        print("Invalid ZIP code. Please enter a valid 5-digit ZIP code.")
 
     # Get Meteor impact coordinate data from NASA
 
